@@ -9,15 +9,11 @@ public interface IUserService {
     /**
      * 用户登录
      * @param username 用户名
-     *        password 密码
+     * @param password 密码
      */
     Rest<UserVo> login(String username, String password) throws OutputException;
 
-    /**
-     * 保存用户(用户注册)
-     * @param user
-     */
-    void saveUser(UserDao user);
+    Rest<UserVo> register(String username, String password, String email, String verification);
 
     /**
      * 查询用户是否存在
@@ -35,8 +31,10 @@ public interface IUserService {
 
     /**
      * 获取验证码
+     * @param email 邮箱
+     * @param type 验证码的用途，由前台确定并传给后台
      */
 
-    Rest<String> verification(String email);
+    Rest<String> verification(String email, String type);
 
 }

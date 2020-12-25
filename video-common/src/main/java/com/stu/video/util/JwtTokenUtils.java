@@ -32,7 +32,7 @@ public class JwtTokenUtils {
      * @return
      */
     public static String generatorToken(JwtInfo jwtInfo, int expire){
-        return Jwts.builder().claim(JwtConstants.JWT_KEY_USER_ID,jwtInfo.getUid())
+        return Jwts.builder().claim(JwtConstants.JWT_KEY_USER_ID,jwtInfo.getUsername())
                 .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                 .signWith(SignatureAlgorithm.HS256,getKeyInstance()).compact();
     }

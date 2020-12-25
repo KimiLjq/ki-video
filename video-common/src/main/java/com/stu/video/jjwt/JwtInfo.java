@@ -7,17 +7,17 @@ package com.stu.video.jjwt;
  * @Description:
  */
 public class JwtInfo {
-    private String uid;
+    private String username;
 
-    public JwtInfo(String uid) {
-        this.uid = uid;
+    public JwtInfo(String username) {
+        this.username = username;
     }
 
-    public String getUid() {
-        return uid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

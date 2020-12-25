@@ -25,15 +25,20 @@ public class UserController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Rest<UserVo> login(String email, String password) {
-        return null;
+    public Rest<UserVo> login(String username, String password) {
+        return this.userServiceImpl.login(username, password);
     }
 
     @RequestMapping("/register")
     @ResponseBody
     public Rest<UserVo> register(String username, String email, String password, String verification) {
-//        return this.userServiceImpl.register(username, email, password, verification);
-        return null;
+      return this.userServiceImpl.register(username, email, password, verification);
+    }
+
+    @RequestMapping("/verificationCode")
+    @ResponseBody
+    public Rest<String> verificationCode(String email, String type) {
+        return this.userServiceImpl.verification(email, type);
     }
 
     @RequestMapping("/queryUserByUsername")
@@ -42,7 +47,7 @@ public class UserController {
         return this.userServiceImpl.queryUserByUsername(username);
     }
 
-    @RequestMapping("/queryEmailByEmail")
+    @RequestMapping("/queryUserByEmail")
     @ResponseBody
     public Rest<UserVo> queryUserByEmail(String email) {
         return this.userServiceImpl.queryUserByEmail(email);

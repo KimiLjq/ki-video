@@ -1,6 +1,6 @@
 package com.stu.video.aspect;
 
-import com.stu.video.rest.RestCode;
+import com.stu.video.enums.RestCode;
 
 /**
  * @Author: kimijiaqili

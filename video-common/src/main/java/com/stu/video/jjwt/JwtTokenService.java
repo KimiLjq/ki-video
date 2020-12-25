@@ -1,6 +1,7 @@
 package com.stu.video.jjwt;
 
 import com.stu.video.util.JwtTokenUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: kimijiaqili
@@ -8,6 +9,7 @@ import com.stu.video.util.JwtTokenUtils;
  * @Version: 1.0
  * @Description:
  */
+@Component
 public class JwtTokenService {
     /**
      * token过期时间

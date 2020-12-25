@@ -7,5 +7,5 @@ package com.stu.video.jjwt;
  * @Description: 用于token的chaims保存有效信息字段名
  */
 public class JwtConstants {
-    public static final String JWT_KEY_USER_ID = "uid";
+    public static final String JWT_KEY_USER_ID = "username";
 }
