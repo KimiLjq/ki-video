@@ -4,7 +4,13 @@ import com.stu.video.aspect.OutputException;
 import com.stu.video.mapper.UserDao;
 import com.stu.video.rest.Rest;
 import com.stu.video.vo.UserVo;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+@Component
 public interface IUserService {
     /**
      * 用户登录
@@ -13,7 +19,9 @@ public interface IUserService {
      */
     Rest<UserVo> login(String username, String password) throws OutputException;
 
-    Rest<UserVo> register(String username, String password, String email, String verification);
+    Rest<UserVo> autoLogin(String username);
+
+    Rest<String> register(String username, String password, String email, String verification);
 
     /**
      * 查询用户是否存在
@@ -36,5 +44,7 @@ public interface IUserService {
      */
 
     Rest<String> verification(String email, String type);
+
+    Rest<String> modifyAvatar(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException;
 
 }

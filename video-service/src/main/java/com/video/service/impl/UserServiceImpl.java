@@ -1,5 +1,6 @@
 package com.video.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.stu.video.aspect.OutputException;
 import com.stu.video.entity.User;
 import com.stu.video.enums.VerificationType;
@@ -9,12 +10,22 @@ import com.stu.video.mapper.UserDao;
 import com.stu.video.redis.RedisOperator;
 import com.stu.video.rest.Rest;
 import com.stu.video.enums.RestCode;
+import com.stu.video.util.ImageUtil;
 import com.stu.video.util.MailUtil;
 import com.stu.video.vo.UserVo;
 import com.video.service.IUserService;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @Author: kimijiaqili
@@ -23,7 +34,7 @@ import org.apache.commons.lang3.StringUtils;
  * @Description:
  */
 
-@Service
+@Component
 public class UserServiceImpl implements IUserService {
     public static final String VERIFICATION_REDIS_KEY = "verify:%s type:%s";
 
@@ -35,6 +46,12 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RedisOperator redisOperator;
+
+    @Autowired
+    private ImageUtil imageUtil;
+
+    @Autowired
+    private MailUtil mailUtil;
 
     @Override
     public Rest<UserVo> login(String username, String password) throws OutputException {
@@ -50,37 +67,45 @@ public class UserServiceImpl implements IUserService {
         }
 
         JwtInfo jwtInfo = new JwtInfo(username);
-        jwtTokenService.generatorToken(jwtInfo);
+        String token = jwtTokenService.generatorToken(jwtInfo);
 
         UserVo userVo =user.transformToUserVo();
+        userVo.setUserToken(token);
         return new Rest<>(RestCode.SUCCEED, userVo);
     }
 
     @Override
-    public Rest<UserVo> register(String username, String password, String email, String verification) throws OutputException {
-        String codeKey = String.format(VERIFICATION_REDIS_KEY, email, VerificationType.REGISTER);
+    public Rest<UserVo> autoLogin(String username){
+        User user = userDao.selectByUsername(username);
+        UserVo userVo = user.transformToUserVo();
+        return new Rest<>(RestCode.SUCCEED, userVo);
+    }
+
+    @Override
+    public Rest<String> register(String username,String email, String password,  String verification) {
+        String codeKey = String.format(VERIFICATION_REDIS_KEY, email, VerificationType.REGISTER.getCode());
         String serverVerCode = redisOperator.get(codeKey);
         if (!verification.equals(serverVerCode)) {
-            throw new OutputException(RestCode.UNFOUND, "验证码错误");
+            return new Rest<>(RestCode.UNFOUND, "验证码错误");
         }
 
         if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(email)) {
-            throw new OutputException(RestCode.DATA_FORMAT_EXCEPTION, "数据填写不完整");
+            return new Rest<>(RestCode.DATA_FORMAT_EXCEPTION, "数据填写不完整");
         }
 
         User user = userDao.selectByUsername(username);
         if (user != null) {
-            throw new OutputException(RestCode.EXIST, "该账号已存在");
+            return new Rest<>(RestCode.EXIST, "该账号已存在");
         }
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setAvatarUrl("");
         newUser.setPassword(password);
         newUser.setEmail(email);
+        newUser.setCreateTime(new Date());
         userDao.insert(newUser);
-        UserVo userVo = user.transformToUserVo();
 
-        return new Rest<>(RestCode.SUCCEED, userVo);
+        return new Rest<>(RestCode.SUCCEED, "注册成功");
     }
 
     @Override
@@ -115,15 +140,48 @@ public class UserServiceImpl implements IUserService {
     public Rest<String> verification(String email, String type) {
         String redisKey =String.format(VERIFICATION_REDIS_KEY, email, type);
         String oldCode = redisOperator.get(redisKey);
-        if (StringUtils.isBlank(oldCode)) {
+        if (!StringUtils.isBlank(oldCode)) {
             return new Rest<String>(RestCode.SUCCEED, "验证码仍在有效期内");
         }
 
         String verificationCode = String.valueOf((int) (Math.random() * 900000) + 100000);
-        MailUtil mailUtil = new MailUtil();
         mailUtil.sendVerificationMail(email, verificationCode);
-        redisOperator.set(redisKey, verificationCode, 600);
+        redisOperator.set(redisKey, verificationCode, 3600);
 
         return new Rest<String>(RestCode.SUCCEED, "");
+    }
+
+    @Override
+    public Rest<String> modifyAvatar(MultipartFile file, HttpServletRequest request) throws IllegalStateException, OutputException {
+
+
+        if (file == null || file.isEmpty()) throw new OutputException(RestCode.DATA_FORMAT_EXCEPTION, "上传文件为空");
+        String fileName = file.getOriginalFilename();  // 文件名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+        String filePath = "D:/IDEA/workspace/ki-video/static/avatar/"; // 上传后的路径
+        fileName = UUID.randomUUID() + suffixName; // 新文件名
+        File dest = new File(filePath + fileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        String newUrl[] = imageUtil.newFileUrl("headImage", file);
+//        String localUrl = newUrl[0];
+//        String httpUrl = newUrl[1];
+//        boolean compressSuccess = imageUtil.compressFile(file, localUrl);
+//        if (!compressSuccess) throw new OutputException(RestCode.DATA_FORMAT_EXCEPTION, "图片格式异常");
+//        //数据库处理
+//        User user = userMapper.selectByPrimaryKey(id);
+//        user.setHeadImage(httpUrl);
+//        userMapper.updateByPrimaryKeySelective(user);
+//        JSONObject json = new JSONObject();
+//        json.put("headImage", httpUrl);
+//        return json;
+        return new Rest<String>(RestCode.SUCCEED, fileName);
     }
 }

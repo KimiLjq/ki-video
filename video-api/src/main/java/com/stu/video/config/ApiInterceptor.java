@@ -1,13 +1,18 @@
 package com.stu.video.config;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stu.video.aspect.OutputException;
 import com.stu.video.jjwt.JwtInfo;
 import com.stu.video.jjwt.JwtTokenService;
 import com.stu.video.rest.Rest;
 import com.stu.video.enums.RestCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +31,12 @@ public class ApiInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-        String username = request.getHeader("headerUsername");
-        String token = request.getHeader("headerUserToken");
+        String token = request.getHeader("token");
 
-        if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(token)) {
+        if (StringUtils.isNotBlank(token)) {
             JwtInfo jwtInfo = jwtTokenService.stringInfoFromToken(token);
             if (StringUtils.isBlank(jwtInfo.getUsername())) {
                 returnErrorResponse(response, new Rest<String>(RestCode.UNFOUND, "账号在其他设备登录"));
-
                 return false;
             }
         }

@@ -4,11 +4,13 @@ import com.stu.video.aspect.OutputException;
 import com.stu.video.rest.Rest;
 import com.stu.video.vo.UserVo;
 import com.video.service.impl.UserServiceImpl;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @Author: kimijiaqili
@@ -17,25 +19,32 @@ import javax.annotation.Resource;
  * @Description:
  */
 
+@CrossOrigin
 @RestController
-@RequestMapping("user")
+@RequestMapping("ki-video/user")
 public class UserController {
-    @Resource
+    @Autowired
     private UserServiceImpl userServiceImpl;
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Rest<UserVo> login(String username, String password) {
         return this.userServiceImpl.login(username, password);
     }
 
-    @RequestMapping("/register")
+    @RequestMapping(value = "/autoLogin", method = RequestMethod.POST)
     @ResponseBody
-    public Rest<UserVo> register(String username, String email, String password, String verification) {
+    public Rest<UserVo> autoLogin(String username) {
+        return this.userServiceImpl.autoLogin(username);
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<String> register(String username, String email, String password, String verification) {
       return this.userServiceImpl.register(username, email, password, verification);
     }
 
-    @RequestMapping("/verificationCode")
+    @RequestMapping(value = "/verificationCode", method = RequestMethod.POST)
     @ResponseBody
     public Rest<String> verificationCode(String email, String type) {
         return this.userServiceImpl.verification(email, type);
@@ -51,5 +60,12 @@ public class UserController {
     @ResponseBody
     public Rest<UserVo> queryUserByEmail(String email) {
         return this.userServiceImpl.queryUserByEmail(email);
+    }
+
+    @RequestMapping("/modifyAvatar")
+    @ResponseBody
+    public Rest<String> modifyAvatar(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException{
+
+        return this.userServiceImpl.modifyAvatar(file, request);
     }
 }

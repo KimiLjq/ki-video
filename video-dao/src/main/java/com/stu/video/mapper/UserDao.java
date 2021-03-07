@@ -2,7 +2,11 @@ package com.stu.video.mapper;
 
 
 import com.stu.video.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -11,6 +15,7 @@ import java.util.List;
  * @author kimijiaqili
  * @since 2020-12-19 14:50:49
  */
+@Repository
 public interface UserDao {
 
     /**

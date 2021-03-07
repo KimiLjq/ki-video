@@ -3,8 +3,8 @@ package com.stu.video.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.util.StringUtils;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: kimijiaqili
@@ -12,12 +12,13 @@ import org.springframework.util.StringUtils;
  * @Version: 1.0
  * @Description:
  */
+@Component
 public class MailUtil {
     public static final String mailSubject = "验证码";
     public static final String mailContent = "您的验证码是：%s";
 
     @Autowired
-    private JavaMailSender mailSender;
+    private JavaMailSenderImpl mailSender;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
