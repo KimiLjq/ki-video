@@ -150,4 +150,14 @@
         where username = #{username,jdbcType=VARCHAR}
     </select>
 
+    <update id="resetPassword">
+        update myshortvideo.user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+        </set>
+        where email = #{email}
+    </update>
+
 </mapper>

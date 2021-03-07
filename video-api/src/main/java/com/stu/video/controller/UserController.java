@@ -44,6 +44,12 @@ public class UserController {
       return this.userServiceImpl.register(username, email, password, verification);
     }
 
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<String> resetPassword(String email, String newPassword, String verification) {
+        return this.userServiceImpl.resetPassword(email, newPassword, verification);
+    }
+
     @RequestMapping(value = "/verificationCode", method = RequestMethod.POST)
     @ResponseBody
     public Rest<String> verificationCode(String email, String type) {

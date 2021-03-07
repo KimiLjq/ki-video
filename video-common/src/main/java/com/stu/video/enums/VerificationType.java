@@ -3,7 +3,8 @@ package com.stu.video.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum VerificationType {
-    REGISTER(1);
+    REGISTER(1),
+    RESETPASSWORD(2);
 
     private int code;
 

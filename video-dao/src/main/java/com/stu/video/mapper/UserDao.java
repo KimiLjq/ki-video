@@ -72,4 +72,6 @@ public interface UserDao {
 
     User selectByUsername(String username);
 
+    int resetPassword(String email, String password);
+
 }

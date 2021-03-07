@@ -102,10 +102,30 @@ public class UserServiceImpl implements IUserService {
         newUser.setAvatarUrl("");
         newUser.setPassword(password);
         newUser.setEmail(email);
+        newUser.setAvatarUrl("/ki-video/user/avatar/default-avatar.png");
         newUser.setCreateTime(new Date());
         userDao.insert(newUser);
 
         return new Rest<>(RestCode.SUCCEED, "注册成功");
+    }
+
+    public Rest<String> resetPassword(String email, String newPassword, String verification) {
+        String codeKey = String.format(VERIFICATION_REDIS_KEY, email, VerificationType.RESETPASSWORD.getCode());
+        String serverVerCode = redisOperator.get(codeKey);
+        if (!verification.equals(serverVerCode)) {
+            return new Rest<>(RestCode.UNFOUND, "验证码错误");
+        }
+
+        if (StringUtils.isBlank(email) || StringUtils.isBlank(newPassword)) {
+            return new Rest<>(RestCode.DATA_FORMAT_EXCEPTION, "数据填写不完整");
+        }
+
+        int result = userDao.resetPassword(email, newPassword);
+        if (result == 0) {
+            return new Rest<>(RestCode.UNKNOWN, "密码修改不成功");
+        }
+
+        return new Rest<>(RestCode.SUCCEED, "密码修改成功");
     }
 
     @Override
@@ -141,7 +161,7 @@ public class UserServiceImpl implements IUserService {
         String redisKey =String.format(VERIFICATION_REDIS_KEY, email, type);
         String oldCode = redisOperator.get(redisKey);
         if (!StringUtils.isBlank(oldCode)) {
-            return new Rest<String>(RestCode.SUCCEED, "验证码仍在有效期内");
+            return new Rest<String>(RestCode.EXIST, "验证码仍在有效期内");
         }
 
         String verificationCode = String.valueOf((int) (Math.random() * 900000) + 100000);
