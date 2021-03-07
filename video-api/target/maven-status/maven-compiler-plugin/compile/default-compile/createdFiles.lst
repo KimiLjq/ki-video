@@ -1,0 +1,5 @@
+com\stu\video\Application.class
+com\stu\video\controller\UserController.class
+com\stu\video\config\ApiFilter.class
+com\stu\video\config\ApiInterceptor.class
+com\stu\video\config\WebMvcConfig.class
