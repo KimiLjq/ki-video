@@ -1,2 +1,3 @@
 com\video\service\impl\UserServiceImpl.class
+com\video\service\impl\VideoServiceImpl.class
 com\video\service\IUserService.class

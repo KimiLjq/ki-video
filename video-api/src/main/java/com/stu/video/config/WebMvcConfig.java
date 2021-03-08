@@ -50,6 +50,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/ki-video/user/avatar/**").addResourceLocations("file:D:/IDEA/workspace/ki-video/static/avatar/");
+        registry.addResourceHandler("/static/images/module/**", "/static/images/bg/**", "/ki-video/user/avatar/**").addResourceLocations("file:D:/IDEA/workspace/ki-video/static/images/module/", "file:D:/IDEA/workspace/ki-video/static/images/bg/", "file:D:/IDEA/workspace/ki-video/static/avatar/");
+
     }
 }

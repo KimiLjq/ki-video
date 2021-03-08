@@ -1,12 +1,15 @@
 package com.video.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.stu.video.aspect.OutputException;
 import com.stu.video.entity.User;
+import com.stu.video.entity.Video;
 import com.stu.video.enums.VerificationType;
 import com.stu.video.jjwt.JwtInfo;
 import com.stu.video.jjwt.JwtTokenService;
 import com.stu.video.mapper.UserDao;
+import com.stu.video.mapper.VideoDao;
 import com.stu.video.redis.RedisOperator;
 import com.stu.video.rest.Rest;
 import com.stu.video.enums.RestCode;
@@ -16,10 +19,13 @@ import com.stu.video.vo.UserVo;
 import com.video.service.IUserService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -52,6 +58,12 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private MailUtil mailUtil;
+
+    @Value("file:\\D:\\IDEA\\workspace\\ki-video\\static\\json\\video-data.json")
+    private Resource videoData;
+
+    @Autowired
+    private VideoDao videoDao;
 
     @Override
     public Rest<UserVo> login(String username, String password) throws OutputException {

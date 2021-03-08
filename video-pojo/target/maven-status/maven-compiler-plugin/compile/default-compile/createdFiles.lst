@@ -1,2 +1,4 @@
+com\stu\video\vo\MarqueeDataVo.class
 com\stu\video\vo\UserVo.class
 com\stu\video\entity\User.class
+com\stu\video\entity\Video.class
