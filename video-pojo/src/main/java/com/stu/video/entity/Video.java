@@ -1,9 +1,6 @@
 package com.stu.video.entity;
 
-import com.stu.video.vo.MarqueeDataVo;
-import com.stu.video.vo.UserVo;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import com.stu.video.vo.VideoVo;
 
 import java.util.Date;
 import java.io.Serializable;
@@ -31,7 +28,11 @@ public class Video implements Serializable {
     */
     private String title;
     /**
-    * 视频封面路径
+     * 视频封面路径
+     */
+    private String cover;
+    /**
+    * 视频海报路径
     */
     private String poster;
     /**
@@ -110,6 +111,14 @@ public class Video implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getPoster() {
@@ -224,28 +233,31 @@ public class Video implements Serializable {
         this.createTime = createTime;
     }
 
-    public MarqueeDataVo transformToUserVo() {
-        MarqueeDataVo marqueeDataVo = new MarqueeDataVo();
-        marqueeDataVo.setId(this.getId());
-        marqueeDataVo.setActived(false);
-        marqueeDataVo.setAmount(this.getAmount());
-        marqueeDataVo.setAudioId(this.getAudioId());
-        marqueeDataVo.setCreateTime(this.getCreateTime());
-        marqueeDataVo.setFirstType(this.getFirstType());
-        marqueeDataVo.setIsUcg(this.getIsUcg());
-        marqueeDataVo.setLikeCount(this.getLikeCount());
-        marqueeDataVo.setPoster(this.ip + this.getPoster());
-        marqueeDataVo.setSecondType(this.getSecondType());
-        marqueeDataVo.setTitle(this.getTitle());
-        marqueeDataVo.setType(this.getType());
-        marqueeDataVo.setUserId(this.getUserId());
-        marqueeDataVo.setVideoDesc(this.getVideoDesc());
-        marqueeDataVo.setVideoHeight(this.getVideoHeight());
-        marqueeDataVo.setVideoSecond(this.getVideoSecond());
-        marqueeDataVo.setVideoUrl(this.getVideoUrl());
-        marqueeDataVo.setVideoWidth(this.getVideoWidth());
+    public VideoVo transformToVo() {
+        VideoVo videoVo = new VideoVo();
+        videoVo.setId(this.getId());
+        videoVo.setActived(false);
+        videoVo.setAmount(this.getAmount());
+        videoVo.setAudioId(this.getAudioId());
+        videoVo.setCreateTime(this.getCreateTime());
+        videoVo.setFirstType(this.getFirstType());
+        videoVo.setIsUcg(this.getIsUcg());
+        videoVo.setLikeCount(this.getLikeCount());
+        videoVo.setPoster(this.ip + this.getPoster());
+        videoVo.setSecondType(this.getSecondType());
+        videoVo.setTitle(this.getTitle());
+        videoVo.setType(this.getType());
+        videoVo.setUserId(this.getUserId());
+        videoVo.setVideoDesc(this.getVideoDesc());
+        videoVo.setVideoHeight(this.getVideoHeight());
+        videoVo.setVideoSecond(this.getVideoSecond());
+        videoVo.setVideoUrl(this.getVideoUrl());
+        videoVo.setVideoWidth(this.getVideoWidth());
+        if (this.cover != null && this.cover != "") {
+            videoVo.setCover(this.ip + this.getCover());
+        }
 
-        return marqueeDataVo;
+        return videoVo;
     }
 
 }

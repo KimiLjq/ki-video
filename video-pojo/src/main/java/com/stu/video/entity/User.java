@@ -159,7 +159,7 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
-    public UserVo transformToUserVo() {
+    public UserVo transformToVo() {
         UserVo userVo = new UserVo();
         userVo.setId(this.id);
         userVo.setUsername(this.username);

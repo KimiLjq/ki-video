@@ -7,6 +7,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR" />
         <result property="poster" column="poster" jdbcType="VARCHAR"/>
         <result property="videoUrl" column="video_url" jdbcType="VARCHAR"/>
         <result property="audioId" column="audio_id" jdbcType="INTEGER"/>
@@ -24,14 +25,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, title, poster, video_url, audio_id, is_ucg, type, first_type, second_Type,
+        id, user_id, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type,
         video_desc, video_second, video_height, video_width, amount, like_count, create_time
     </sql>
 
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          id, user_id, title, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.video
         where id = #{id}
     </select>
@@ -39,7 +40,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          id, user_id, title, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.video
         limit #{offset}, #{limit}
     </select>
@@ -47,7 +48,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          id, user_id, title, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.video
         <where>
             <if test="id != null">
@@ -58,6 +59,9 @@
             </if>
             <if test="title != null and title != ''">
                 and title = #{title}
+            </if>
+            <if test="cover != null and cover != ''">
+                and cover = #{cover}
             </if>
             <if test="poster != null and poster != ''">
                 and poster = #{poster}
@@ -106,8 +110,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into myshortvideo.video(user_id, title, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time)
-        values (#{userId}, #{title}, #{poster}, #{videoUrl}, #{audioId}, #{isUcg}, #{type}, #{firstType}, #{secondType}, #{videoDesc}, #{videoSecond}, #{videoHeight}, #{videoWidth}, #{amount}, default, default)
+        insert into myshortvideo.video(user_id, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time)
+        values (#{userId}, #{title}, #{cover}, #{poster}, #{videoUrl}, #{audioId}, #{isUcg}, #{type}, #{firstType}, #{secondType}, #{videoDesc}, #{videoSecond}, #{videoHeight}, #{videoWidth}, #{amount}, default, default)
     </insert>
 
     <!--通过主键修改数据-->
@@ -119,6 +123,9 @@
             </if>
             <if test="title != null and title != ''">
                 title = #{title},
+            </if>
+            <if test="cover != null and cover != ''">
+                cover = #{cover},
             </if>
             <if test="poster != null and poster != ''">
                 poster = #{poster},
@@ -177,6 +184,20 @@
         from myshortvideo.video
         order by amount desc
         limit #{num}
+    </select>
+
+    <select id="queryVideosByCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.video
+        <where>
+            <if test="firstType != null and firstType != ''">
+                and first_type = #{firstType}
+            </if>
+            <if test="secondType != null and secondType != ''">
+                and second_type = #{secondType}
+            </if>
+        </where>
     </select>
 
 </mapper>

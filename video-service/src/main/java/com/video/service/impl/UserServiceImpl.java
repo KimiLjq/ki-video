@@ -59,12 +59,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private MailUtil mailUtil;
 
-    @Value("file:\\D:\\IDEA\\workspace\\ki-video\\static\\json\\video-data.json")
-    private Resource videoData;
-
-    @Autowired
-    private VideoDao videoDao;
-
     @Override
     public Rest<UserVo> login(String username, String password) throws OutputException {
         if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
@@ -81,7 +75,7 @@ public class UserServiceImpl implements IUserService {
         JwtInfo jwtInfo = new JwtInfo(username);
         String token = jwtTokenService.generatorToken(jwtInfo);
 
-        UserVo userVo =user.transformToUserVo();
+        UserVo userVo =user.transformToVo();
         userVo.setUserToken(token);
         return new Rest<>(RestCode.SUCCEED, userVo);
     }
@@ -89,7 +83,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Rest<UserVo> autoLogin(String username){
         User user = userDao.selectByUsername(username);
-        UserVo userVo = user.transformToUserVo();
+        UserVo userVo = user.transformToVo();
         return new Rest<>(RestCode.SUCCEED, userVo);
     }
 
@@ -149,7 +143,7 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             throw new OutputException(RestCode.UNFOUND, "不存在该用户");
         }
-        UserVo userVo = user.transformToUserVo();
+        UserVo userVo = user.transformToVo();
 
         return new Rest<>(RestCode.SUCCEED, userVo);
     }
@@ -163,7 +157,7 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             throw new OutputException(RestCode.UNFOUND, "用户不存在");
         }
-        UserVo userVo = user.transformToUserVo();
+        UserVo userVo = user.transformToVo();
 
         return new Rest<>(RestCode.SUCCEED, userVo);
     }

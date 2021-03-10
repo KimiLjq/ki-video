@@ -1,12 +1,13 @@
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\jjwt\JwtTokenService.java
+D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\TransformToVoUtil.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\enums\RestCode.java
-D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\MailUtil.java
-D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\aspect\GlobalExceptionHandle.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\enums\VerificationType.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\redis\RedisOperator.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\jjwt\JwtConstants.java
-D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\JwtTokenUtils.java
-D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\ImageUtil.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\jjwt\JwtInfo.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\aspect\OutputException.java
 D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\rest\Rest.java
+D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\MailUtil.java
+D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\aspect\GlobalExceptionHandle.java
+D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\JwtTokenUtils.java
+D:\IDEA\workspace\ki-video\video-common\src\main\java\com\stu\video\util\ImageUtil.java

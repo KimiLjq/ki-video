@@ -1,10 +1,8 @@
 package com.stu.video.controller;
 
-import com.stu.video.entity.Video;
 import com.stu.video.rest.Rest;
-import com.stu.video.vo.MarqueeDataVo;
-import com.stu.video.vo.UserVo;
-import com.video.service.impl.UserServiceImpl;
+import com.stu.video.vo.VideoVo;
+import com.stu.video.vo.VideoCategoryVo;
 import com.video.service.impl.VideoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,31 @@ public class VideoController {
 
     @RequestMapping(value = "/marqueeData", method = RequestMethod.POST)
     @ResponseBody
-    public Rest<List<MarqueeDataVo>> marqueeData() {
+    public Rest<List<VideoVo>> marqueeData() {
         return this.videoService.marqueeData();
+    }
+
+    @RequestMapping(value = "/homePage", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<List<VideoCategoryVo>> homePage() {
+        return this.videoService.homePage();
+    }
+
+    @RequestMapping(value = "/punchline", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<VideoCategoryVo> punchline() {
+        return this.videoService.punchline();
+    }
+
+    @RequestMapping(value = "/young", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<VideoCategoryVo> young() {
+        return this.videoService.young();
+    }
+
+    @RequestMapping(value = "/fashion", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<List<VideoCategoryVo>> fashion() {
+        return this.videoService.fashion();
     }
 }
