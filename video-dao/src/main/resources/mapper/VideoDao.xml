@@ -200,4 +200,12 @@
         </where>
     </select>
 
+    <select id="queryAllCategory" resultType="String">
+        select
+        first_type
+        from myshortvideo.video
+        where first_type != ""
+        group by first_type
+    </select>
+
 </mapper>

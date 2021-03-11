@@ -68,4 +68,6 @@ public interface VideoDao {
     List<Video> queryHotspot(int num);
 
     List<Video> queryVideosByCategory(String firstType, String secondType);
+
+    List<String> queryAllCategory();
 }

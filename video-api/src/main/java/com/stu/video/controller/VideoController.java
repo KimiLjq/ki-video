@@ -1,6 +1,8 @@
 package com.stu.video.controller;
 
 import com.stu.video.rest.Rest;
+import com.stu.video.vo.HotCategoryVideoVo;
+import com.stu.video.vo.HotTagVo;
 import com.stu.video.vo.VideoVo;
 import com.stu.video.vo.VideoCategoryVo;
 import com.video.service.impl.VideoServiceImpl;
@@ -50,5 +52,17 @@ public class VideoController {
     @ResponseBody
     public Rest<List<VideoCategoryVo>> fashion() {
         return this.videoService.fashion();
+    }
+
+    @RequestMapping(value = "/today", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<HotTagVo> today() {
+        return this.videoService.today();
+    }
+
+    @RequestMapping(value = "/hotTag", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<HotCategoryVideoVo> hotTag(String hotTag) {
+        return this.videoService.hotTag(hotTag);
     }
 }
