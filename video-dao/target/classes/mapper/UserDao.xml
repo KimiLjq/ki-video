@@ -86,7 +86,7 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into myshortvideo.user(username, password, avatar_url, user_type, email, telephone, description, fans_count, follows_count, receive_like_count, create_time)
-        values (#{username}, #{password}, #{avatarUrl}, #{userType}, #{email}, #{telephone}, #{description}, default, default, default, #{createTime})
+        values (#{username}, #{password}, #{avatarUrl}, #{userType}, #{email}, #{telephone}, #{description}, default, default, default, default)
     </insert>
 
     <!--通过主键修改数据-->

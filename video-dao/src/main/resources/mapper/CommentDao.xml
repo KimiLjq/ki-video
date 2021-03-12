@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stu.video.mapper.CommentDao">
+
+    <resultMap id="BaseResultMap" type="com.stu.video.entity.Comment">
+        <!--@Table comment-->
+        <result property="commentId" column="comment_id" jdbcType="INTEGER"/>
+        <result property="fromUsername" column="from_username" jdbcType="VARCHAR"/>
+        <result property="toUsername" column="to_username" jdbcType="VARCHAR"/>
+        <result property="fromUserAvatar" column="from_user_avatar" jdbcType="VARCHAR"/>
+        <result property="videoId" column="video_id" jdbcType="INTEGER"/>
+        <result property="fatherCommentId" column="father_comment_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        comment_id, from_username, to_username, from_user_avatar, video_id, father_comment_id, content, create_time
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.comment
+        where comment_id = #{commentId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.comment
+        <where>
+            <if test="commentId != null">
+                and comment_id = #{commentId}
+            </if>
+            <if test="fromUsername != null and fromUsername != ''">
+                and from_username = #{fromUsername}
+            </if>
+            <if test="toUsername != null and toUsername != ''">
+                and to_username = #{toUsername}
+            </if>
+            <if test="fromUserAvatar != null and fromUserAvatar != ''">
+                and from_user_avatar = #{fromUserAvatar}
+            </if>
+            <if test="videoId != null">
+                and video_id = #{videoId}
+            </if>
+            <if test="fatherCommentId != null">
+                and father_comment_id = #{fatherCommentId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="commentId" useGeneratedKeys="true">
+        insert into myshortvideo.comment(from_username, to_username, from_user_avatar, video_id, father_comment_id, content, create_time)
+        values (#{fromUsername}, #{toUsername}, #{fromUserAvatar}, #{videoId}, #{fatherCommentId}, #{content}, default)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myshortvideo.comment
+        <set>
+            <if test="fromUsername != null and fromUsername != ''">
+                from_username = #{fromUsername},
+            </if>
+            <if test="toUsername != null and toUsername != ''">
+                to_username = #{toUsername},
+            </if>
+            <if test="fromUserAvatar != null and fromUserAvatar != ''">
+                from_user_avatar = #{fromUserAvatar},
+            </if>
+            <if test="videoId != null">
+                video_id = #{videoId},
+            </if>
+            <if test="fatherCommentId != null">
+                father_comment_id = #{fatherCommentId},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where comment_id = #{commentId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from myshortvideo.comment where comment_id = #{commentId}
+    </delete>
+
+    <select id="queryByVideoId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.comment
+        where video_id = #{videoId}
+    </select>
+
+</mapper>

@@ -3,4 +3,5 @@ D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\controller\User
 D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\config\ApiFilter.java
 D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\controller\VideoController.java
 D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\config\WebMvcConfig.java
+D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\controller\CommentController.java
 D:\IDEA\workspace\ki-video\video-api\src\main\java\com\stu\video\config\ApiInterceptor.java

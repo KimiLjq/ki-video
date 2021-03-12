@@ -1,3 +1,4 @@
+com\stu\video\vo\CommentsVo.class
 com\stu\video\entity\User.class
 com\stu\video\entity\Video.class
 com\stu\video\vo\VideoCategoryVo.class
@@ -5,4 +6,5 @@ com\stu\video\vo\HotCategoryVideoVo.class
 com\stu\video\vo\UserVo.class
 com\stu\video\vo\HotTagVo.class
 com\stu\video\vo\VideoVo.class
+com\stu\video\entity\Comment.class
 com\stu\video\vo\CategoryVo.class

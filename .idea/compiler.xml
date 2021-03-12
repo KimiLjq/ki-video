@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="video-dao" />
         <module name="video-service" />
-        <module name="video-api" />
-        <module name="video-pojo" />
         <module name="video-common" />
+        <module name="video-pojo" />
+        <module name="video-api" />
       </profile>
     </annotationProcessing>
   </component>
