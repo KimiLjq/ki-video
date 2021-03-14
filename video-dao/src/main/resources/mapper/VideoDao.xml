@@ -208,4 +208,12 @@
         group by first_type
     </select>
 
+    <select id="queryRecommendVideo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.video
+        where first_type = #{type} and id != #{videoId}
+        ORDER BY RAND() LIMIT 3
+    </select>
+
 </mapper>

@@ -222,4 +222,11 @@ public class VideoServiceImpl {
 
         return new Rest<>(RestCode.SUCCEED, result);
     }
+
+    public Rest<List<VideoVo>> recommendVideo(String type, Integer videoId) {
+        List<Video> videoList = videoDao.queryRecommendVideo(type, videoId);
+        List<VideoVo> videoVoList = transformToVoUtil.transformToVo(videoList);
+
+        return new Rest<>(RestCode.SUCCEED, videoVoList);
+    }
 }

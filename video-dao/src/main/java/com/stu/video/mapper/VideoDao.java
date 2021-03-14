@@ -70,4 +70,6 @@ public interface VideoDao {
     List<Video> queryVideosByCategory(String firstType, String secondType);
 
     List<String> queryAllCategory();
+
+    List<Video> queryRecommendVideo(String type, Integer videoId);
 }

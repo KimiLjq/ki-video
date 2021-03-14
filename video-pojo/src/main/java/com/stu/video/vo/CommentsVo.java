@@ -16,9 +16,9 @@ public class CommentsVo implements Serializable {
 
     private Integer id;
 
-    private Comment firstComment;
+    private CommentVo firstComment;
 
-    private List<Comment> secondComment;
+    private List<CommentVo> secondComment;
 
     public Integer getId() {
         return id;
@@ -28,19 +28,19 @@ public class CommentsVo implements Serializable {
         this.id = id;
     }
 
-    public Comment getFirstComment() {
+    public CommentVo getFirstComment() {
         return firstComment;
     }
 
-    public void setFirstComment(Comment firstComment) {
+    public void setFirstComment(CommentVo firstComment) {
         this.firstComment = firstComment;
     }
 
-    public List<Comment> getSecondComment() {
+    public List<CommentVo> getSecondComment() {
         return secondComment;
     }
 
-    public void setSecondComment(List<Comment> secondComment) {
+    public void setSecondComment(List<CommentVo> secondComment) {
         this.secondComment = secondComment;
     }
 }

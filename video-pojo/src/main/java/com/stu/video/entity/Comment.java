@@ -1,5 +1,8 @@
 package com.stu.video.entity;
 
+import com.stu.video.vo.CommentVo;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -107,6 +110,23 @@ public class Comment implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public CommentVo transformToVo() {
+        CommentVo commentVo = new CommentVo();
+        commentVo.setCommentId(this.commentId);
+        commentVo.setContent(this.content);
+        commentVo.setFatherCommentId(this.fatherCommentId);
+        commentVo.setFromUserAvatar(this.fromUserAvatar);
+        commentVo.setToUsername(this.toUsername);
+        commentVo.setFromUsername(this.fromUsername);
+        commentVo.setVideoId(this.videoId);
+
+        SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
+        String formatDate = dFormat.format(this.createTime);
+        commentVo.setCreateTime(formatDate);
+
+        return commentVo;
     }
 
 }

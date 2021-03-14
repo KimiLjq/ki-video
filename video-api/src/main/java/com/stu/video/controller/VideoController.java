@@ -65,4 +65,10 @@ public class VideoController {
     public Rest<HotCategoryVideoVo> hotTag(String hotTag) {
         return this.videoService.hotTag(hotTag);
     }
+
+    @RequestMapping(value = "/recommendVideo", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<List<VideoVo>> recommendVideo(String type, Integer videoId) {
+        return this.videoService.recommendVideo(type, videoId);
+    }
 }
