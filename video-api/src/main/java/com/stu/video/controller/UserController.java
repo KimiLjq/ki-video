@@ -26,36 +26,6 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public Rest<UserVo> login(String username, String password) {
-        return this.userServiceImpl.login(username, password);
-    }
-
-    @RequestMapping(value = "/autoLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public Rest<UserVo> autoLogin(String username) {
-        return this.userServiceImpl.autoLogin(username);
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
-    public Rest<String> register(String username, String email, String password, String verification) {
-      return this.userServiceImpl.register(username, email, password, verification);
-    }
-
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    @ResponseBody
-    public Rest<String> resetPassword(String email, String newPassword, String verification) {
-        return this.userServiceImpl.resetPassword(email, newPassword, verification);
-    }
-
-    @RequestMapping(value = "/verificationCode", method = RequestMethod.POST)
-    @ResponseBody
-    public Rest<String> verificationCode(String email, String type) {
-        return this.userServiceImpl.verification(email, type);
-    }
-
     @RequestMapping("/queryUserByUsername")
     @ResponseBody
     public Rest<UserVo> queryUserByUsername(String username) throws OutputException {
