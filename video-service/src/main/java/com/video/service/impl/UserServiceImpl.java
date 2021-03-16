@@ -1,21 +1,11 @@
 package com.video.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.stu.video.aspect.OutputException;
 import com.stu.video.entity.User;
-import com.stu.video.entity.Video;
-import com.stu.video.enums.VerificationType;
-import com.stu.video.jjwt.JwtInfo;
-import com.stu.video.jjwt.JwtTokenService;
 import com.stu.video.mapper.UserDao;
-import com.stu.video.redis.RedisOperator;
 import com.stu.video.rest.Rest;
 import com.stu.video.enums.RestCode;
-import com.stu.video.util.ImageUtil;
-import com.stu.video.util.MailUtil;
 import com.stu.video.vo.UserVo;
-import com.video.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -66,20 +55,21 @@ public class UserServiceImpl {
         return new Rest<>(RestCode.SUCCEED, userVo);
     }
 
-    public Rest<String> modifyAvatar(MultipartFile file, HttpServletRequest request) throws IllegalStateException, OutputException {
-
-
+    public Rest<String> modifyAvatar(String username, MultipartFile file, HttpServletRequest request) throws IllegalStateException, OutputException {
         if (file == null || file.isEmpty()) throw new OutputException(RestCode.DATA_FORMAT_EXCEPTION, "上传文件为空");
         String fileName = file.getOriginalFilename();  // 文件名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         String filePath = "D:/IDEA/workspace/ki-video/static/avatar/"; // 上传后的路径
         fileName = UUID.randomUUID() + suffixName; // 新文件名
+
         File dest = new File(filePath + fileName);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
         try {
             file.transferTo(dest);
+            fileName = "/ki-video/user/avatar/" + fileName;
+            this.userDao.updateUserAvatar(username, fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,6 +86,16 @@ public class UserServiceImpl {
 //        JSONObject json = new JSONObject();
 //        json.put("headImage", httpUrl);
 //        return json;
-        return new Rest<String>(RestCode.SUCCEED, fileName);
+        return new Rest<>(RestCode.SUCCEED, fileName);
+    }
+
+    public Rest<String> changePersonDescription(String username, String description) {
+        if (StringUtils.isBlank(username)) {
+            throw new OutputException(RestCode.DATA_FORMAT_EXCEPTION, "用户名为空");
+        }
+
+        userDao.updateDescription(username, description);
+
+        return new Rest<>(RestCode.SUCCEED, "success", "修改个性签名成功");
     }
 }

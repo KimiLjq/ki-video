@@ -160,4 +160,27 @@
         where email = #{email}
     </update>
 
+    <update id="updateDescription">
+        update myshortvideo.user
+        <set>
+            description = #{description},
+        </set>
+        where username = #{username}
+    </update>
+
+    <select id="selectAvatarByUsername" resultType="String">
+        select
+        avatar_url
+        from myshortvideo.user
+        where username = #{username}
+    </select>
+
+    <update id="updateUserAvatar">
+        update myshortvideo.user
+        <set>
+            avatar_url = #{avatarUrl},
+        </set>
+        where username = #{username}
+    </update>
+
 </mapper>

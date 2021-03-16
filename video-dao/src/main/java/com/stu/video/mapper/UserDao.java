@@ -74,4 +74,9 @@ public interface UserDao {
 
     int resetPassword(String email, String password);
 
+    int updateDescription(String username, String description);
+
+    String selectAvatarByUsername(String username);
+
+    int updateUserAvatar(String username, String avatarUrl);
 }

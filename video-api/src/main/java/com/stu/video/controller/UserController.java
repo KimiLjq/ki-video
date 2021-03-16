@@ -38,10 +38,16 @@ public class UserController {
         return this.userServiceImpl.queryUserByEmail(email);
     }
 
-    @RequestMapping("/modifyAvatar")
+    @RequestMapping(value = "/modifyAvatar",  method = RequestMethod.POST)
     @ResponseBody
-    public Rest<String> modifyAvatar(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException{
+    public Rest<String> modifyAvatar(String username, @RequestParam(value = "file") MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException{
 
-        return this.userServiceImpl.modifyAvatar(file, request);
+        return this.userServiceImpl.modifyAvatar(username, file, request);
+    }
+
+    @RequestMapping("/changePersonDescription")
+    @ResponseBody
+    public Rest<String> changePersonDescription(String username, String description) {
+        return this.userServiceImpl.changePersonDescription(username, description);
     }
 }
