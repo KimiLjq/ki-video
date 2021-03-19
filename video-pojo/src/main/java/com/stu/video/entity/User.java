@@ -62,6 +62,8 @@ public class User implements Serializable {
     */
     private Date createTime;
 
+    private boolean isFollow;
+
 
     public Integer getId() {
         return id;
@@ -159,6 +161,14 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
+
     public UserVo transformToVo() {
         UserVo userVo = new UserVo();
         userVo.setId(this.id);
@@ -172,6 +182,7 @@ public class User implements Serializable {
         userVo.setFollowsCount(this.followsCount);
         userVo.setReceiveLikeCount(this.receiveLikeCount);
         userVo.setCreateTime(this.createTime);
+        userVo.setFollow(this.isFollow);
 
         return userVo;
     }

@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.stu.video.entity.Video">
         <!--@Table video-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="cover" column="cover" jdbcType="VARCHAR" />
         <result property="poster" column="poster" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type,
+        id, author, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type,
         video_desc, video_second, video_height, video_width, amount, like_count, create_time
     </sql>
 
@@ -54,8 +54,8 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="userId != null">
-                and user_id = #{userId}
+            <if test="author != null">
+                and author = #{author}
             </if>
             <if test="title != null and title != ''">
                 and title = #{title}
@@ -110,16 +110,16 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into myshortvideo.video(user_id, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time)
-        values (#{userId}, #{title}, #{cover}, #{poster}, #{videoUrl}, #{audioId}, #{isUcg}, #{type}, #{firstType}, #{secondType}, #{videoDesc}, #{videoSecond}, #{videoHeight}, #{videoWidth}, #{amount}, default, default)
+        insert into myshortvideo.video(author, title, cover, poster, video_url, audio_id, is_ucg, type, first_type, second_Type, video_desc, video_second, video_height, video_width, amount, like_count, create_time)
+        values (#{author}, #{title}, #{cover}, #{poster}, #{videoUrl}, #{audioId}, #{isUcg}, #{type}, #{firstType}, #{secondType}, #{videoDesc}, #{videoSecond}, #{videoHeight}, #{videoWidth}, #{amount}, default, default)
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update myshortvideo.video
         <set>
-            <if test="userId != null">
-                user_id = #{userId},
+            <if test="author != null">
+                author = #{author},
             </if>
             <if test="title != null and title != ''">
                 title = #{title},
@@ -215,5 +215,21 @@
         where first_type = #{type} and id != #{videoId}
         ORDER BY RAND() LIMIT 3
     </select>
+
+    <update id="addLikeCount">
+        update myshortvideo.video
+        <set>
+            like_count = like_count + 1,
+        </set>
+        where id = #{videoId}
+    </update>
+
+    <update id="deleteLikeCount">
+        update myshortvideo.video
+        <set>
+            like_count = like_count - 1,
+        </set>
+        where id = #{videoId}
+    </update>
 
 </mapper>

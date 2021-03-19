@@ -19,7 +19,7 @@ public class VideoVo implements Serializable {
     /**
      * 发布者id
      */
-    private Integer userId;
+    private String author;
     /**
      * 视频title
      */
@@ -96,12 +96,12 @@ public class VideoVo implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {

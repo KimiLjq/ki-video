@@ -1,3 +1,4 @@
 com\stu\video\mapper\CommentDao.class
 com\stu\video\mapper\UserDao.class
 com\stu\video\mapper\VideoDao.class
+com\stu\video\mapper\UserFansDao.class

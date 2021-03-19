@@ -72,4 +72,8 @@ public interface VideoDao {
     List<String> queryAllCategory();
 
     List<Video> queryRecommendVideo(String type, Integer videoId);
+
+    int addLikeCount(Integer videoId);
+
+    int deleteLikeCount(Integer videoId);
 }

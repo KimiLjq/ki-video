@@ -58,6 +58,8 @@ public class UserVo implements Serializable {
 
     private String userToken;
 
+    private boolean isFollow;
+
 
     public Integer getId() {
         return id;
@@ -153,5 +155,13 @@ public class UserVo implements Serializable {
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 }

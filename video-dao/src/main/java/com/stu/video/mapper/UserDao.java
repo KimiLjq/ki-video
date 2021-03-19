@@ -79,4 +79,8 @@ public interface UserDao {
     String selectAvatarByUsername(String username);
 
     int updateUserAvatar(String username, String avatarUrl);
+
+    int addReceiveLikeCount(String username);
+
+    int deleteReceiveLikeCount(String username);
 }

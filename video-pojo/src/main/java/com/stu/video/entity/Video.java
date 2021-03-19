@@ -22,7 +22,7 @@ public class Video implements Serializable {
     /**
     * 发布者id
     */
-    private Integer userId;
+    private String author;
     /**
     * 视频title
     */
@@ -97,12 +97,12 @@ public class Video implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {
@@ -247,7 +247,7 @@ public class Video implements Serializable {
         videoVo.setSecondType(this.getSecondType());
         videoVo.setTitle(this.getTitle());
         videoVo.setType(this.getType());
-        videoVo.setUserId(this.getUserId());
+        videoVo.setAuthor(this.author);
         videoVo.setVideoDesc(this.getVideoDesc());
         videoVo.setVideoHeight(this.getVideoHeight());
         videoVo.setVideoSecond(this.getVideoSecond());

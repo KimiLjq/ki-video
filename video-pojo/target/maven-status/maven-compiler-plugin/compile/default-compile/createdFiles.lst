@@ -1,6 +1,7 @@
 com\stu\video\vo\CommentsVo.class
 com\stu\video\entity\User.class
 com\stu\video\entity\Video.class
+com\stu\video\entity\UserFans.class
 com\stu\video\vo\VideoCategoryVo.class
 com\stu\video\vo\HotCategoryVideoVo.class
 com\stu\video\vo\UserVo.class

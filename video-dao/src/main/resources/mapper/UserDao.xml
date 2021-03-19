@@ -183,4 +183,20 @@
         where username = #{username}
     </update>
 
+    <update id="addReceiveLikeCount">
+        update myshortvideo.user
+        <set>
+            receive_like_count = receive_like_count + 1,
+        </set>
+        where username = #{username}
+    </update>
+
+    <update id="deleteReceiveLikeCount">
+        update myshortvideo.user
+        <set>
+            receive_like_count = receive_like_count - 1,
+        </set>
+        where username= #{username}
+    </update>
+
 </mapper>

@@ -10,11 +10,7 @@ import com.stu.video.vo.CommentsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @Author: kimijiaqili
@@ -57,7 +53,7 @@ public class CommentServiceImpl {
         List<Comment> commentList = commentDao.queryByVideoId(videoId);
         List<CommentVo> commentVoList = transformToVoUtil.transformToVo(commentList);
 
-        Map<Integer, CommentsVo> map = new HashMap<>();
+        Map<Integer, CommentsVo> map = new LinkedHashMap<>();
         for(CommentVo commentVo:commentVoList) {
             if (commentVo.getFatherCommentId() == null) {
                 CommentsVo commentsVo = new CommentsVo();

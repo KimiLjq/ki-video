@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stu.video.mapper.UserFansDao">
+
+    <resultMap id="BaseResultMap" type="com.stu.video.entity.UserFans">
+        <!--@Table user_fans-->
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="fansUsername" column="fans_username" jdbcType="VARCHAR"/>
+        <result property="interactFollow" column="interact_follow" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        username, fans_username, interact_follow, create_time
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.user_fans
+        where username = #{username}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.user_fans
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.user_fans
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="fansUsername != null and fansUsername != ''">
+                and fans_username = #{fansUsername}
+            </if>
+            <if test="interactFollow != null">
+                and interact_follow = #{interactFollow}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="username" useGeneratedKeys="true">
+        insert into myshortvideo.user_fans(username, fans_username, interact_follow, create_time)
+        values (#{username}, #{fansUsername}, default, default)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myshortvideo.user_fans
+        <set>
+            <if test="interactFollow != null">
+                interact_follow = #{interactFollow},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from myshortvideo.user_fans where username = #{username}
+    </delete>
+
+    <select id="queryRelationShipByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.user_fans
+        where username = #{username} and fans_username = #{fansUsername}
+    </select>
+
+    <delete id="deleteByUsername">
+        delete from myshortvideo.user_fans
+        where username = #{username} and fans_username = #{fansUsername}
+    </delete>
+
+</mapper>
