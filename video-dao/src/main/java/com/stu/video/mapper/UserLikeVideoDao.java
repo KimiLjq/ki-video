@@ -21,7 +21,7 @@ public interface UserLikeVideoDao {
      * @param username 主键
      * @return 实例对象
      */
-    UserLikeVideo queryById(String username);
+    UserLikeVideo queryById(String username, Integer videoId);
 
     /**
      * 查询指定行数据

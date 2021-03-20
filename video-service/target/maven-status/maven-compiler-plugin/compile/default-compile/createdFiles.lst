@@ -1,3 +1,4 @@
+com\video\service\impl\UserLikeVideoServiceImpl.class
 com\video\service\impl\UserFansImpl.class
 com\video\service\impl\UserServiceImpl.class
 com\video\service\impl\VideoServiceImpl.class

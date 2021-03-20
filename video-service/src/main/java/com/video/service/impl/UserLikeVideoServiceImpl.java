@@ -29,12 +29,21 @@ public class UserLikeVideoServiceImpl {
     @Autowired
     private VideoDao videoDao;
 
+    public Rest<UserLikeVideo> queryLikeVideo(String username, Integer videoId) throws OutputException {
+        UserLikeVideo userLikeVideo = userLikeVideoDao.queryById(username, videoId);
+        if (userLikeVideo != null) {
+            return new Rest<>(RestCode.SUCCEED, userLikeVideo);
+        }
+
+        throw new OutputException(RestCode.UNFOUND, "暂无相关信息");
+    }
+
     public Rest<UserLikeVideo> addLikeVideo(String username, Integer videoId, String author) throws OutputException {
         UserLikeVideo userLikeVideo = new UserLikeVideo();
         userLikeVideo.setUsername(username);
         userLikeVideo.setVideoId(videoId);
         if (userLikeVideoDao.insert(userLikeVideo) > 0) {
-            if (StringUtils.isBlank(author)) {
+            if (!StringUtils.isBlank(author)) {
                 userDao.addReceiveLikeCount(author);
             }
             videoDao.addLikeCount(videoId);
@@ -46,10 +55,10 @@ public class UserLikeVideoServiceImpl {
 
     public Rest<String> cancelLikeVideo(String username, Integer videoId, String author) throws OutputException {
         if (userLikeVideoDao.deleteById(username, videoId) > 0) {
-            if (StringUtils.isBlank(author)) {
+            if (!StringUtils.isBlank(author)) {
                 userDao.deleteReceiveLikeCount(author);
             }
-            videoDao.addLikeCount(videoId);
+            videoDao.deleteLikeCount(videoId);
             return new Rest<>(RestCode.SUCCEED, "取消点赞成功");
         }
 

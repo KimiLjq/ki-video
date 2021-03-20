@@ -1,9 +1,10 @@
 com\stu\video\Application.class
+com\stu\video\controller\UserLikeVideoController.class
 com\stu\video\controller\UserController.class
-com\stu\video\config\ApiFilter.class
 com\stu\video\config\ApiInterceptor.class
-com\stu\video\controller\LoginRegisterController.class
-com\stu\video\config\WebMvcConfig.class
 com\stu\video\controller\CommentController.class
 com\stu\video\controller\VideoController.class
 com\stu\video\controller\UserFansController.class
+com\stu\video\config\ApiFilter.class
+com\stu\video\controller\LoginRegisterController.class
+com\stu\video\config\WebMvcConfig.class

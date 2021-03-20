@@ -9,18 +9,22 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        username, video_id, create_time
+    </sql>
+
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          username, video_id, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.user_like_video
-        where username = #{username}
+        where username = #{username} and video_id = #{videoId}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          username, video_id, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.user_like_video
         limit #{offset}, #{limit}
     </select>
@@ -28,7 +32,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          username, video_id, create_time
+        <include refid="Base_Column_List" />
         from myshortvideo.user_like_video
         <where>
             <if test="username != null and username != ''">
