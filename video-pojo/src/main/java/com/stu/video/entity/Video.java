@@ -2,6 +2,7 @@ package com.stu.video.entity;
 
 import com.stu.video.vo.VideoVo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -239,7 +240,6 @@ public class Video implements Serializable {
         videoVo.setActived(false);
         videoVo.setAmount(this.getAmount());
         videoVo.setAudioId(this.getAudioId());
-        videoVo.setCreateTime(this.getCreateTime());
         videoVo.setFirstType(this.getFirstType());
         videoVo.setIsUcg(this.getIsUcg());
         videoVo.setLikeCount(this.getLikeCount());
@@ -255,6 +255,11 @@ public class Video implements Serializable {
         videoVo.setVideoWidth(this.getVideoWidth());
         if (this.cover != null && this.cover != "") {
             videoVo.setCover(this.ip + this.getCover());
+        }
+        if (this.createTime != null) {
+            SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
+            String formatDate = dFormat.format(this.createTime);
+            videoVo.setCreateTime(formatDate);
         }
 
         return videoVo;

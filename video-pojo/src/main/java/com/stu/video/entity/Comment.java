@@ -122,9 +122,12 @@ public class Comment implements Serializable {
         commentVo.setFromUsername(this.fromUsername);
         commentVo.setVideoId(this.videoId);
 
-        SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
-        String formatDate = dFormat.format(this.createTime);
-        commentVo.setCreateTime(formatDate);
+        if (this.createTime != null) {
+            SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
+            String formatDate = dFormat.format(this.createTime);
+            commentVo.setCreateTime(formatDate);
+
+        }
 
         return commentVo;
     }

@@ -229,4 +229,12 @@ public class VideoServiceImpl {
 
         return new Rest<>(RestCode.SUCCEED, videoVoList);
     }
+
+    public Rest<List<VideoVo>> myVideo(String username) {
+        List<Video> videoList = videoDao.queryMyVideo(username);
+        List<VideoVo> videoVoList = transformToVoUtil.transformToVo(videoList);
+
+        return new Rest<>(RestCode.SUCCEED, videoVoList);
+    }
+
 }

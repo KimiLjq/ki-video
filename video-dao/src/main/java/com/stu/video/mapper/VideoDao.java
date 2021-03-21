@@ -76,4 +76,6 @@ public interface VideoDao {
     int addLikeCount(Integer videoId);
 
     int deleteLikeCount(Integer videoId);
+
+    List<Video> queryMyVideo(String username);
 }

@@ -1,6 +1,7 @@
 package com.stu.video.mapper;
 
 import com.stu.video.entity.UserFans;
+import com.stu.video.vo.FollowUserVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -69,4 +70,7 @@ public interface UserFansDao {
 
     int deleteByUsername(String username, String fansUsername);
 
+    List<FollowUserVo> queryFollowUserByUsername (String username);
+
+    List<FollowUserVo> queryFansByUsername (String username);
 }

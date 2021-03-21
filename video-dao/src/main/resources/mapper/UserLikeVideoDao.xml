@@ -18,7 +18,14 @@
         select
         <include refid="Base_Column_List" />
         from myshortvideo.user_like_video
-        where username = #{username} and video_id = #{videoId}
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="videoId != null and videoId != ''">
+                and video_id = #{videoId}
+            </if>
+        </where>
     </select>
 
     <!--查询指定行数据-->
@@ -68,5 +75,17 @@
     <delete id="deleteById">
         delete from myshortvideo.user_like_video where username = #{username} and video_id = #{videoId}
     </delete>
+
+    <select id="queryLikeVideo" resultType="com.stu.video.entity.Video">
+        select
+            a.id, a.author, a.title, a.poster, a.video_url videoUrl, a.type, a.first_type firstType,
+            a.second_type secondType, a.video_desc videoDesc,
+            a.video_second videoSecond, a.amount, a.like_count likeCount, b.create_time createTime
+        from myshortvideo.video as a
+        right join
+        myshortvideo.user_like_video as b
+        on a.id = b.video_id
+        where b.username = #{username}
+    </select>
 
 </mapper>

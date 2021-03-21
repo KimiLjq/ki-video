@@ -1,6 +1,7 @@
 package com.stu.video.mapper;
 
 import com.stu.video.entity.UserLikeVideo;
+import com.stu.video.entity.Video;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -64,5 +65,7 @@ public interface UserLikeVideoDao {
      * @return 影响行数
      */
     int deleteById(String username, Integer videoId);
+
+    List<Video> queryLikeVideo(String username);
 
 }

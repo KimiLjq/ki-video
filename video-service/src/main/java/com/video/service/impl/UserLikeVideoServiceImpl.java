@@ -8,9 +8,13 @@ import com.stu.video.mapper.UserDao;
 import com.stu.video.mapper.UserLikeVideoDao;
 import com.stu.video.mapper.VideoDao;
 import com.stu.video.rest.Rest;
+import com.stu.video.util.TransformToVoUtil;
+import com.stu.video.vo.VideoVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: kimijiaqili
@@ -28,6 +32,9 @@ public class UserLikeVideoServiceImpl {
 
     @Autowired
     private VideoDao videoDao;
+
+    @Autowired
+    private TransformToVoUtil<Video, VideoVo> transformToVoUtil;
 
     public Rest<UserLikeVideo> queryLikeVideo(String username, Integer videoId) throws OutputException {
         UserLikeVideo userLikeVideo = userLikeVideoDao.queryById(username, videoId);
@@ -65,5 +72,11 @@ public class UserLikeVideoServiceImpl {
         throw new OutputException(RestCode.UNKNOWN, "取消点赞失败");
     }
 
+    public Rest<List<VideoVo>> likeVideo(String username) {
+        List<Video> videoList = userLikeVideoDao.queryLikeVideo(username);
+        List<VideoVo> videoVoList = transformToVoUtil.transformToVo(videoList);
+
+        return new Rest<>(RestCode.SUCCEED, videoVoList);
+    }
 
 }

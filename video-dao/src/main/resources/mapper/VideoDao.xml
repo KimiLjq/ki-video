@@ -232,4 +232,11 @@
         where id = #{videoId}
     </update>
 
+    <select id="queryMyVideo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from myshortvideo.video
+        where author = #{author}
+    </select>
+
 </mapper>

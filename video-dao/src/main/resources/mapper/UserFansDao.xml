@@ -88,4 +88,20 @@
         where username = #{username} and fans_username = #{fansUsername}
     </delete>
 
+    <select id="queryFollowUserByUsername" resultType="com.stu.video.vo.FollowUserVo">
+        select a.id, a.username, a.avatar_url avatarUrl, a.description
+        from myshortvideo.user as a
+        right join
+        myshortvideo.user_fans as b
+        on a.username = b.username
+        where b.fans_username = #{username}
+    </select>
+
+    <select id="queryFansByUsername" resultType="com.stu.video.vo.FollowUserVo">
+        select id, username, avatar_url avatarUrl, description
+        from myshortvideo.user
+        where username
+        in (select fans_username from myshortvideo.user_fans where username = #{username})
+    </select>
+
 </mapper>

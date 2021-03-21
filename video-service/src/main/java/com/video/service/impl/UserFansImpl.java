@@ -5,9 +5,12 @@ import com.stu.video.entity.UserFans;
 import com.stu.video.enums.RestCode;
 import com.stu.video.mapper.UserFansDao;
 import com.stu.video.rest.Rest;
+import com.stu.video.vo.FollowUserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: kimijiaqili
@@ -63,5 +66,39 @@ public class UserFansImpl {
         else {
             throw new OutputException(RestCode.UNKNOWN, "取关失败");
         }
+    }
+
+    public Rest<List<FollowUserVo>> queryMyFollowUserList(String username, String loginUsername) {
+        List<FollowUserVo> followUserVos = userFansDao.queryFollowUserByUsername(username);
+        if (!StringUtils.isBlank(loginUsername)) {
+            if (username.equals(loginUsername)) {
+                for(FollowUserVo followUserVo:followUserVos) {
+                    followUserVo.setFollow(true);
+                }
+            }
+            else {
+                for(FollowUserVo followUserVo:followUserVos) {
+                    if (userFansDao.queryRelationShipByUsername(followUserVo.getUsername(), loginUsername) != null ) {
+                        followUserVo.setFollow(true);
+                    }
+                }
+            }
+        }
+
+        return new Rest<>(RestCode.SUCCEED, followUserVos);
+    }
+
+    public Rest<List<FollowUserVo>> queryMyFansList(String username, String loginUsername) {
+        List<FollowUserVo> fansList = userFansDao.queryFansByUsername(username);
+
+        if (!StringUtils.isBlank(loginUsername)) {
+            for (FollowUserVo fans:fansList) {
+                if (userFansDao.queryRelationShipByUsername(fans.getUsername(), loginUsername) != null) {
+                    fans.setFollow(true);
+                }
+            }
+        }
+
+        return new Rest<>(RestCode.SUCCEED, fansList);
     }
 }

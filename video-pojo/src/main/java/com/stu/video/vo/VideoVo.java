@@ -83,7 +83,7 @@ public class VideoVo implements Serializable {
     /**
      * 视频上传时间
      */
-    private Date createTime;
+    private String createTime;
 
     private boolean actived;
 
@@ -224,11 +224,11 @@ public class VideoVo implements Serializable {
         this.likeCount = likeCount;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

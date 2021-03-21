@@ -2,6 +2,7 @@ package com.stu.video.mapper;
 
 
 import com.stu.video.entity.User;
+import com.stu.video.vo.FollowUserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

@@ -71,4 +71,10 @@ public class VideoController {
     public Rest<List<VideoVo>> recommendVideo(String type, Integer videoId) {
         return this.videoService.recommendVideo(type, videoId);
     }
+
+    @RequestMapping(value = "/myVideo", method = RequestMethod.POST)
+    @ResponseBody
+    public Rest<List<VideoVo>> myVideo(String username) {
+        return this.videoService.myVideo(username);
+    }
 }
